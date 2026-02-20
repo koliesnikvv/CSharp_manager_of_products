@@ -3,11 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//for categorizing products
+
 
 namespace StorageClasses
 {
-    internal class ProductsCategory
+    public enum ProductsCategory
     {
+        Electronics, 
+        Grocery,
+        Books,
+        Clothing,
+        Footwear,
+        Accessories,
+        Beauty,
+        Toys,
+        Home
+
     }
+    //internal class ProductsCategory
+    //{
+    //}
 }
-//for categorizing products
