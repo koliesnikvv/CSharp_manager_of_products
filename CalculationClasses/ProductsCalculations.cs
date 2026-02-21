@@ -65,13 +65,13 @@ namespace CalculationClasses
                 return Amount * Price;
             }
         }
-        //public int DepositaryId
-        //{
-        //    get
-        //    {
-        //        return _data.DepositaryId;
-        //    }
-        //}
+        public int DepositaryId
+        {
+            get
+            {
+                return _data.DepositaryId;
+            }
+        }
 
         public string InformationAboutProduct()
         {
@@ -82,7 +82,7 @@ namespace CalculationClasses
             information += $"Left in storage -  {Amount}\n";
             information += $"Price for one is  {Price}\n";
             information += $"Total price is  {TotalPrice}\n";
-            //information += $"You can find this product on depositary  {DepositaryId}";
+            information += $"You can find this product on depositary  {DepositaryId}";
             return information;
         }
     }
