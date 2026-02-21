@@ -7,4 +7,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CalculationClasses\CalculationClasses.csproj" />
+    <ProjectReference Include="..\Services\ServicesClasses.csproj" />
+    <ProjectReference Include="..\StorageClasses\StorageClasses.csproj" />
+  </ItemGroup>
+
 </Project>
