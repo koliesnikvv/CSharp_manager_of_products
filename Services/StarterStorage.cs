@@ -12,9 +12,11 @@ namespace ServicesClasses
         {
             get; private set;
         } = new List<ProductsStorage>();
+
+        public static List<DepositaryStorage> Depositaries { get; private set; } = new List<DepositaryStorage>();
         static StarterStorage()
         {
-           // InitDepositaries();
+            InitDepositories();
             InitProducts();
         }
         private static void InitProducts()
@@ -117,7 +119,15 @@ namespace ServicesClasses
             product14.Description = "Heartbreaking story of forbidden love of Cathy and Heathcliff";
             Products.Add(product14);
         }
-        private static void InitDepositories() { 
+        private static void InitDepositories()
+        {
+            //Creating class objects
+            Depositaries.Add(new DepositaryStorage(1, "Kyiv Central Hub", DepositaryLocation.Kyiv));
+            Depositaries.Add(new DepositaryStorage(2, "Lviv Tech Warehouse", DepositaryLocation.Lviv));
+            Depositaries.Add(new DepositaryStorage(3, "Odesa Port Terminal", DepositaryLocation.Odesa));
         }
     }
 }
+    
+
+
