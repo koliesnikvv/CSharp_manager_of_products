@@ -30,9 +30,10 @@ namespace StorageClasses
         {
             get; set;
         }
-        //public DepositaryId {
-        //    get; set;
-        //    }
+        
+        public int DepositaryId {
+            get; set;
+            }
         public ProductsCategory Category
         {
             get; set;
@@ -43,7 +44,7 @@ namespace StorageClasses
         {
             Id = id; 
             Name = name;
-          //  DepositaryId = depositaryId;
+            DepositaryId = depositaryId;
 
         }
         public ProductsStorage(int id, string name, int depositaryId, int amount, decimal price, string description, ProductsCategory category)

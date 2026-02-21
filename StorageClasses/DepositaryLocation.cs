@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 
 namespace StorageClasses
 {
-    internal class DepositaryLocation
+    public enum DepositaryLocation
     {
+        Kyiv,
+        Lviv,
+        Boguslav,
+        Odesa,
+        Kharkiv,
+        Dnipro
     }
 }
-//info about depositary location as it was written in the example
