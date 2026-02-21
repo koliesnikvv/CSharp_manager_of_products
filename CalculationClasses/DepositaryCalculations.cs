@@ -1,73 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using StorageClasses;
 
 namespace CalculationClasses
 {
-    // Calc class for editing, creating and viewing depositaries
     public class DepositaryCalculations
     {
-        private readonly DepositaryStorage _data;
+        private readonly DepositaryStorage _storage;
 
-        public DepositaryCalculations(DepositaryStorage data)
+        public DepositaryCalculations(DepositaryStorage storage)
         {
-            _data = data;
+            _storage = storage;
         }
 
-        public int Id
+        public decimal CalculateTotalStockValue()
         {
-            get
-            {
-                return _data.Id;
-            }
+            // Calculate the sum (price * quantity) for all products in the list of this warehouse
+            return _storage.Products.Sum(p => p.Price * p.Amount);
         }
 
-        public string Name
+        public string GetStorageHeader()
         {
-            get
-            {
-                return _data.Name;
-            }
-        }
-
-        public string Location
-        {
-            get
-            {
-                return _data.Location.ToString();
-            }
-        }
-
-        // Calculation of the total cost of all products in this specific depositary
-        public decimal TotalValue
-        {
-            get
-            {
-                // Returns 0 if there are no products, otherwise calculates the sum
-                return _data.Products?.Sum(p => p.Price * p.Amount) ?? 0;
-            }
-        }
-
-        public int ProductsCount
-        {
-            get
-            {
-                return _data.Products?.Count ?? 0;
-            }
-        }
-
-        public string InformationAboutDepositary()
-        {
-            string information = $"Id of depositary: {Id}\n";
-            information += $"Name of depositary: {Name}\n";
-            information += $"Location: {Location}\n";
-            information += $"Number of product types: {ProductsCount}\n";
-            information += $"Total value of all products: {TotalValue}\n";
-            return information;
+            return $"\n>>> STORAGE: {_storage.Name} | LOCATION: {_storage.Location} <<<";
         }
     }
 }
-//calc class for editing, creating and viewing depositarys
