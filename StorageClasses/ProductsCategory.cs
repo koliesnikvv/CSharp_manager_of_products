@@ -21,7 +21,4 @@ namespace StorageClasses
         Home
 
     }
-    //internal class ProductsCategory
-    //{
-    //}
 }
