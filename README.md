@@ -39,7 +39,7 @@ Contains classes that add calculated fields
 * DepositoryCalculations.cs - wrapper for depository with calculated totalValue field
 
 ### ProductManager (as a console application), was developed for user interface:
-Program.cs - contains menu and user interaction
+Program.cs - contains menu of products
 
 #### To run:
 1. Clone the repository
