@@ -5,23 +5,67 @@ using StorageClasses;
 
 namespace ServicesClasses
 {
-    public static class ProcessingStorage
+    public class ProcessingStorage : IDataService
     {
-        public static List<ProductsStorage> GetProducts()
+        private readonly IStorageInit _storage;
+        public ProcessingStorage(IStorageInit storage)
         {
-            return StarterStorage.Products;
+            _storage = storage;
         }
-        public static ProductsStorage GetProductById(int productId)
+        public List<ProductsStorage> GetProducts()
         {
-            for (int i = 0; i < StarterStorage.Products.Count; i++)
+            return _storage.Products;
+        }
+        public ProductsStorage GetProductsById(int productId)
+        {
+            foreach(var product in _storage.Products)
             {
-                ProductsStorage foundProduct = StarterStorage.Products[i];
-                if (foundProduct.Id == productId)
+                if (product.Id == productId)
                 {
-                    return foundProduct;
+                    return product;
                 }
             }
             return null;
+        }
+        public int GetProductCountInDepositary(int depositaryId)
+        {
+            int count = 0;
+            foreach(var product in _storage.Products)
+            {
+                if(product.DepositaryId == depositaryId)
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+        public List<DepositaryStorage> GetDepositaryStorages()
+        {
+            return _storage.Depositaries;
+        }
+        public DepositaryStorage GetDepositaryById(int depositaryId)
+        {
+            foreach(var depositary in _storage.Depositaries)
+            {
+                if(depositary.Id == depositaryId)
+                {
+                    return depositary;
+                }
+            }
+            return null;
+        }
+        public List<ProductsStorage> GetProductsByDepositaryId(int depositaryId)
+        {
+           var res = new List<ProductsStorage>();
+            foreach(var product in _storage.Products)
+            {
+                if(product.DepositaryId == depositaryId)
+                {
+                    res.Add(product);
+                }
+            }
+            return res;
         }
     }
 }

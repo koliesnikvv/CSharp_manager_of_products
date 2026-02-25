@@ -6,20 +6,22 @@ using StorageClasses;
 
 namespace ServicesClasses
 {
-    public static class StarterStorage
+    public class StarterStorage : IStorageInit 
     {
-        public static List<ProductsStorage> Products
+        public List<ProductsStorage> Products
         {
             get; private set;
-        } = new List<ProductsStorage>();
+        } 
 
-        public static List<DepositaryStorage> Depositaries { get; private set; } = new List<DepositaryStorage>();
-        static StarterStorage()
+        public List<DepositaryStorage> Depositaries { get; private set; } 
+        public StarterStorage()
         {
+            Products = new List<ProductsStorage>();
+            Depositaries = new List<DepositaryStorage>();
             InitDepositories();
             InitProducts();
         }
-        private static void InitProducts()
+        private void InitProducts()
         {
             var product1 = new ProductsStorage(1, "Candle", 1);
             product1.Category = ProductsCategory.Home;
@@ -119,7 +121,7 @@ namespace ServicesClasses
             product14.Description = "Heartbreaking story of forbidden love of Cathy and Heathcliff";
             Products.Add(product14);
         }
-        private static void InitDepositories()
+        private void InitDepositories()
         {
             //Creating class objects
             Depositaries.Add(new DepositaryStorage(1, "Kyiv Central Hub", DepositaryLocation.Kyiv));
