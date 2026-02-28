@@ -19,6 +19,24 @@ namespace ProductManagerUI
         public MainWindow()
         {
             InitializeComponent();
+            Locator.Init();
+            MainFrame.Navigate(new Pages.DepositaryPage());
+
+
+
         }
+        public void toPage(Page page)
+        {
+            MainFrame.Navigate(page);
+        }
+        public void BackToPage()
+        {
+            if (MainFrame.CanGoBack)
+            {
+                MainFrame.GoBack();
+            }
+        }
+
+
     }
 }
