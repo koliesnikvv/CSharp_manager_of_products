@@ -14,30 +14,31 @@ namespace ConsoleApp
             // Set encoding to UTF8 for proper character rendering
             Console.OutputEncoding = Encoding.UTF8;
             Console.Title = "Inventory Management System v1.0";
+            IStorageInit storageInit = new StarterStorage(); 
+            IDataService dataService = new ProcessingStorage(storageInit);
+            var depositaries = dataService.GetDepositaryStorages();
+            var allProducts = dataService.GetProducts();
 
-            PrintHeader();
-
+            PrintHeader(depositaries.Count);
+          
             // 1. Linking Logic: Assigning products to their respective storages in memory
             // This populates the Products list inside each DepositaryStorage object
-            foreach (var storage in StarterStorage.Depositaries)
+            foreach (var storage in depositaries)
             {
                 // Filter products where DepositaryId matches current storage Id
-                var relatedProducts = StarterStorage.Products
-                                      .Where(p => p.DepositaryId == storage.Id)
-                                      .ToList();
-
+                var relatedProducts = dataService.GetProductsByDepositaryId(storage.Id);
                 storage.Products = relatedProducts;
             }
 
             // 2. Data Visualization
-            if (!StarterStorage.Depositaries.Any())
+            if (!depositaries.Any())
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(" [!] Error: No storage data found in the system.");
                 Console.ResetColor();
             }
 
-            foreach (var storage in StarterStorage.Depositaries)
+            foreach (var storage in depositaries)
             {
                 var depCalc = new DepositaryCalculations(storage);
 
@@ -79,7 +80,7 @@ namespace ConsoleApp
 
         /// Prints the application visual header
 
-        static void PrintHeader()
+        static void PrintHeader(int depositaryCount)
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(@"
@@ -87,7 +88,7 @@ namespace ConsoleApp
   ║                WAREHOUSE INVENTORY CONTROL SYSTEM                        ║
   ╚══════════════════════════════════════════════════════════════════════════╝");
             Console.ResetColor();
-            Console.WriteLine($" Date: {DateTime.Now:dd.MM.yyyy HH:mm} | Active Units: {StarterStorage.Depositaries.Count}\n");
+            Console.WriteLine($" Date: {DateTime.Now:dd.MM.yyyy HH:mm} | Active Units: {depositaryCount}\n");
         }
 
         /// Prints the application visual footer and waits for user input
