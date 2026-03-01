@@ -1,0 +1,28 @@
+﻿<Page x:Class="ProductManagerUI.Pages.StorageDetailsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Storage Details">
+
+    <Grid Margin="20">
+        <StackPanel>
+            <TextBlock x:Name="StorageNameText" FontSize="26" FontWeight="Bold" Foreground="Cyan" Margin="0,0,0,5"/>
+            <TextBlock x:Name="StorageLocationText" FontSize="16" Foreground="Gray" Margin="0,0,0,20"/>
+
+            <TextBlock Text="Inventory List (Level 2 Entities):" FontSize="18" Margin="0,0,0,10"/>
+
+            <ListBox x:Name="ProductsListBox" Height="300" SelectionChanged="ProductsListBox_SelectionChanged">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="{Binding Name}" FontWeight="Bold" Width="200"/>
+                            <TextBlock Text="{Binding Category}" Width="100" Foreground="DarkGray"/>
+                            <TextBlock Text="{Binding Price, StringFormat={}{0} UAH}" Width="80"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <Button Content="Back to Warehouses" Click="Back_Click" Margin="0,20,0,0" Width="150" HorizontalAlignment="Left"/>
+        </StackPanel>
+    </Grid>
+</Page>
