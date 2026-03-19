@@ -1,12 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ProductManager.Services;
 
 namespace ProductManager.Services
 {
-    internal class DepositoryDetailsDto
+    public class DepositoryDetailsDto
     {
+        public int Id {
+            get; set; 
+        }
+        public string Name {
+            get; set;
+        }
+        public string Location {
+            get; set;
+        }
+        public List<ProductListDto> Products {
+            get; set; 
+        } = new();
+        public decimal TotalValue { 
+            get; set; 
+        }
     }
 }
