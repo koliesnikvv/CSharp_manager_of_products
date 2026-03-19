@@ -1,10 +1,9 @@
 ﻿//obvious, storage for products
 using ProductManager.Data;
-using ProductManager.Data;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ProductManager.Data.Storage
+namespace ProductManager.Data
 {
     public class ProductsStorage
     {
