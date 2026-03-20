@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 
-
 namespace ProductManager.Services
 {
     public interface IDataService
