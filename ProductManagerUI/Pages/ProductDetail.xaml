@@ -1,23 +1,89 @@
 ﻿<Page x:Class="ProductManagerUI.Pages.ProductDetail"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      Title="Деталі товару">
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      Title="Product Details">
 
-    <Grid Margin="30">
-        <StackPanel>
-            <TextBlock Text="Information about the product" FontSize="24" FontWeight="Bold" Margin="0,0,0,20"/>
+    <Grid Background="#F5F5F5">
+        <Border Background="White" 
+                VerticalAlignment="Top" 
+                HorizontalAlignment="Left" 
+                Margin="30" 
+                Padding="30" 
+                CornerRadius="15" 
+                MaxWidth="600"
+                BorderBrush="#E0E0E0" 
+                BorderThickness="1">
 
-            <Border BorderBrush="Gray" BorderThickness="1" Padding="20" CornerRadius="5">
-                <StackPanel>
-                    <TextBlock x:Name="ProductNameText" FontSize="20" FontWeight="Bold" Margin="0,0,0,10"/>
-                    <TextBlock x:Name="CategoryText" FontSize="16" Margin="0,0,0,5"/>
-                    <TextBlock x:Name="PriceText" FontSize="16" Margin="0,0,0,5"/>
-                    <TextBlock x:Name="AmountText" FontSize="16" Margin="0,0,0,5"/>
-                    <TextBlock x:Name="DescriptionText" FontSize="14" FontStyle="Italic" TextWrapping="Wrap" Margin="0,10,0,0"/>
-                </StackPanel>
-            </Border>
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="15" Direction="270" Opacity="0.1" ShadowDepth="2"/>
+            </Border.Effect>
 
-            <Button Content="Back to the list" Click="Back_Click" Margin="0,20,0,0" Width="120" HorizontalAlignment="Left"/>
-        </StackPanel>
+            <StackPanel>
+                <TextBlock Text="PRODUCT CATEGORY" 
+                           FontSize="12" 
+                           FontWeight="Bold" 
+                           Foreground="#888" 
+                           Margin="0,0,0,2"/>
+                <TextBlock Text="{Binding Product.Category}" 
+                           FontSize="16" 
+                           Foreground="#555" 
+                           Margin="0,0,0,15"/>
+
+                <TextBlock Text="{Binding Product.Name}" 
+                           FontSize="28" 
+                           FontWeight="Bold" 
+                           Foreground="#333" 
+                           TextWrapping="Wrap"
+                           Margin="0,0,0,15"/>
+
+                <Separator Background="#EEE" Margin="0,0,0,20"/>
+
+                <TextBlock Text="Description" FontSize="14" FontWeight="SemiBold" Foreground="#555" Margin="0,0,0,5"/>
+                <TextBlock Text="{Binding Product.Description}" 
+                           FontSize="15" 
+                           FontStyle="Italic" 
+                           Foreground="#666" 
+                           TextWrapping="Wrap" 
+                           Margin="0,0,0,25"
+                           LineHeight="22"/>
+
+                <Grid Margin="0,10,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" MinWidth="180"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Price" FontSize="14" Foreground="#888"/>
+                        <TextBlock Text="{Binding Product.PricePerItem, StringFormat='{}{0:N2} UAH'}" 
+                                   FontSize="20" 
+                                   FontWeight="Bold" 
+                                   Foreground="Green"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Margin="20,0,0,0">
+                        <TextBlock Text="In Stock" FontSize="14" Foreground="#888"/>
+                        <TextBlock Text="{Binding Product.Quantity, StringFormat='{}{0} pcs.'}" 
+                                   FontSize="20" 
+                                   FontWeight="SemiBold" 
+                                   Foreground="#333"/>
+                    </StackPanel>
+                </Grid>
+
+                <Button Content="← Back to Storage" 
+                        Click="Back_Click" 
+                        Margin="0,30,0,0" 
+                        Padding="20,10" 
+                        Background="#007ACC" 
+                        Foreground="White" 
+                        FontWeight="Bold" 
+                        BorderThickness="0"
+                        HorizontalAlignment="Left">
+                </Button>
+            </StackPanel>
+        </Border>
     </Grid>
 </Page>

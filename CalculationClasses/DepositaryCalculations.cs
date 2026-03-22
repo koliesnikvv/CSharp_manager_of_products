@@ -15,7 +15,7 @@ namespace CalculationClasses
         public decimal CalculateTotalStockValue()
         {
             // Calculate the sum (price * quantity) for all products in the list of this warehouse
-            return _storage.Products.Sum(p => p.Price * p.Amount);
+            return _storage.Products.Sum(p => p.PricePerItem * p.Quantity);
         }
 
         public string GetStorageHeader()
