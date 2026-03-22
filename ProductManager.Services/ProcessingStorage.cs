@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using StorageClasses;
 
 //here we are processing and taking our data from starter storage
 
-namespace ServicesClasses
+namespace ProductManager.Services
 {
     public class ProcessingStorage : IDataService
     {
