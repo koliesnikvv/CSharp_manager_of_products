@@ -33,14 +33,14 @@ namespace CalculationClasses
         {
             get
             {
-                return _data.Amount;
+                return _data.Quantity;
             }
         }
         public decimal Price
         {
             get
             {
-                return _data.Price;
+                return _data.PricePerItem;
             }
         }
         public string Description

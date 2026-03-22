@@ -1,29 +1,25 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using StorageClasses;
+using ProductManagerUI.ViewModels; 
 
 namespace ProductManagerUI.Pages
 {
     public partial class ProductDetail : Page
     {
-        // The designer accepts the selected product
-        public ProductDetail(ProductsStorage product)
+        public ProductDetail(int productId)
         {
             InitializeComponent();
 
-            // Fill the interface with data from Lab1
-            ProductNameText.Text = product.Name;
-            CategoryText.Text = $"Category: {product.Category}";
-            PriceText.Text = $"Price: {product.Price} uah";
-            AmountText.Text = $"Quantity: {product.Amount} pieces.";
-            DescriptionText.Text = product.Description ?? "There is no description";
+            // Setting the DataContext
+            this.DataContext = new ProductViewModel(Locator.DepositoryService, productId);
         }
 
+        //Back button(navigation)
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             if (NavigationService.CanGoBack)
             {
-                NavigationService.GoBack(); // Return to the previous page
+                NavigationService.GoBack();
             }
         }
     }

@@ -1,38 +1,29 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using StorageClasses;
-using ServicesClasses;
+using ProductManager.Services; 
+using ProductManagerUI.ViewModels;
 
 namespace ProductManagerUI.Pages
 {
     public partial class StorageDetailsPage : Page
     {
-        public StorageDetailsPage(DepositaryStorage storage)
+        public StorageDetailsPage(int depositoryId)
         {
             InitializeComponent();
 
-            // Display information about the selected warehouse (1st level entity) [cite: 15, 33]
-            StorageNameText.Text = storage.Name;
-            StorageLocationText.Text = $"Location: {storage.Location}";
-
-            // Load the list of products for this warehouse using the IoC service [cite: 18, 20, 21, 37]
-            if (Locator.DataService != null)
-            {
-                ProductsListBox.ItemsSource = Locator.DataService.GetProductsByDepositaryId(storage.Id);
-            }
+            // Establishing the ViewModel as the primary data source
+            this.DataContext = new StorageDetailsViewModel(Locator.DepositoryService, depositoryId);
         }
 
-        // Logic for navigating to the 3rd level (Product details) [cite: 16, 33]
+        // Navigation to the 3-rd level (Product Details)
         private void ProductsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (ProductsListBox.SelectedItem is ProductsStorage selectedProduct)
+            if (ProductsListBox.SelectedItem is ProductListDto selectedProduct)
             {
-                // Using page name ProductDetail
-                NavigationService.Navigate(new ProductDetail(selectedProduct));
+                NavigationService.Navigate(new ProductDetail(selectedProduct.Id));
             }
         }
 
-        // Implementation of the requirement to return to the previous page [cite: 17, 35]
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             if (NavigationService.CanGoBack)

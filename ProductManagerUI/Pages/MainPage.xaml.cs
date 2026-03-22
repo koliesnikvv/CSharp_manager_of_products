@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
-using StorageClasses;
-using ServicesClasses;
+using ProductManager.Services; 
+using ProductManagerUI.ViewModels; 
 
 namespace ProductManagerUI.Pages
 {
@@ -9,20 +9,15 @@ namespace ProductManagerUI.Pages
         public MainPage()
         {
             InitializeComponent();
-
-            // Using the correct method name from your ProcessingStorage
-            if (Locator.DataService != null)
-            {
-                WarehouseListBox.ItemsSource = Locator.DataService.GetDepositaryStorages();
-            }
+            this.DataContext = new MainViewModel(Locator.DepositoryService);
         }
 
         private void WarehouseListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (WarehouseListBox.SelectedItem is DepositaryStorage selectedWarehouse)
+            // Now working with DTOs (DepositoryListDto) instead of database models
+            if (WarehouseListBox.SelectedItem is DepositoryListDto selectedWarehouse)
             {
-                // Navigate to Level 2: Storage Details and child entities
-                NavigationService.Navigate(new StorageDetailsPage(selectedWarehouse));
+                NavigationService.Navigate(new StorageDetailsPage(selectedWarehouse.Id));
             }
         }
     }
