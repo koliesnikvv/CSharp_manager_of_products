@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using ServicesClasses;
+using ProductManager.Data; 
+using ProductManager.Services; 
 using System;
 
 namespace ProductManagerUI
@@ -12,14 +13,18 @@ namespace ProductManagerUI
         {
             var services = new ServiceCollection();
 
-            // Register services according to DI principles
-            services.AddSingleton<IStorageInit, StarterStorage>();
-            services.AddSingleton<IDataService, ProcessingStorage>();
+            //(Level 1: Repositories)
+            services.AddSingleton<IDepositoryRepo, DepositoryRepo>();
+            services.AddSingleton<IProductRepo, ProductRepo>();
+
+            //(Level 2: Services) 
+            services.AddSingleton<IDepositoryServices, DepositoryService>();
 
             _serviceProvider = services.BuildServiceProvider();
         }
 
-        // Service access point for the UI
-        public static IDataService DataService => _serviceProvider.GetRequiredService<IDataService>();
+        // Access point for ViewModels and pages 
+        public static IDepositoryServices DepositoryService =>
+            _serviceProvider.GetRequiredService<IDepositoryServices>();
     }
 }
