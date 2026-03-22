@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using System.Collections.Generic;
+using System.Linq; 
 
 namespace StorageClasses
 {
-
-
     public class DepositaryStorage
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public DepositaryLocation Location { get; set; }
         public List<ProductsStorage> Products { get; set; }
+
+        public decimal TotalValue => Products?.Sum(p => p.PricePerItem * p.Quantity) ?? 0;
 
         public DepositaryStorage(int id, string name, DepositaryLocation location)
         {
@@ -25,5 +21,3 @@ namespace StorageClasses
         }
     }
 }
-
-//i didn't know another word to call склад sorry
