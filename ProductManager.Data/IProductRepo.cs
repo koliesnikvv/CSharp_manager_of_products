@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using ProductManager.Data;
+using StorageClasses;
 
 namespace ProductManager.Data
 {
     public interface IProductRepo
     {
-        IEnumerable<Product> GetAll();
-        Product GetById(int id);
-        IEnumerable<Product> GetByDepositoryId(int depositoryId);
+        IEnumerable<ProductsStorage> GetAll();
+        ProductsStorage GetById(int id);
+        IEnumerable<ProductsStorage> GetByDepositoryId(int depositoryId);
     }
 }

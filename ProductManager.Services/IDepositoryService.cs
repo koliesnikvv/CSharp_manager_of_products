@@ -6,5 +6,6 @@ namespace ProductManager.Services{
     {
             IEnumerable<DepositoryListDto> GetAllDepositories();
             DepositoryDetailsDto GetDepositoryDetails(int id);
-        }
+            ProductListDto GetProductById(int id);
+    }
     }
