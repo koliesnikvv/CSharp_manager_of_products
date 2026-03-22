@@ -2,6 +2,8 @@
 using ProductManager.Services;
 using System.Collections.Generic;
 using System.Linq;
+using CalculationClasses;
+using StorageClasses;
 
 namespace ProductManager.Services
 {
@@ -9,11 +11,13 @@ namespace ProductManager.Services
     {
         private readonly IDepositoryRepo _depositoryRepo;
         private readonly IProductRepo _productRepo;
-        public DepositoryService(IDepositoryRepo depositoryRepo,IProductRepo productRepo)
+
+        public DepositoryService(IDepositoryRepo depositoryRepo, IProductRepo productRepo)
         {
             _depositoryRepo = depositoryRepo;
             _productRepo = productRepo;
         }
+
         public IEnumerable<DepositoryListDto> GetAllDepositories()
         {
             var depositories = _depositoryRepo.GetAll();
@@ -25,6 +29,7 @@ namespace ProductManager.Services
                 Location = d.Location.ToString()
             });
         }
+
         public DepositoryDetailsDto GetDepositoryDetails(int id)
         {
             var depository = _depositoryRepo.GetById(id);
@@ -47,6 +52,23 @@ namespace ProductManager.Services
                     PricePerItem = p.PricePerItem,
                     Quantity = p.Quantity
                 }).ToList()
+            };
+        }
+
+        public ProductListDto GetProductById(int id)
+        {
+            var product = _productRepo.GetById(id);
+
+            if (product == null) return null;
+
+            return new ProductListDto
+            {
+                Id = product.Id,
+                Name = product.Name,
+                PricePerItem = product.PricePerItem,
+                Quantity = product.Quantity,
+                Category = product.Category.ToString(),
+                Description = product.Description
             };
         }
     }

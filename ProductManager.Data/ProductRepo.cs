@@ -1,30 +1,17 @@
-﻿using ProductManager.Data;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
+using StorageClasses;
 
 namespace ProductManager.Data
 {
     public class ProductRepo : IProductRepo
     {
-        private readonly ProductsStorage _storage;
+        public IEnumerable<ProductsStorage> GetAll() => StarterStorage.Products;
 
-        public ProductRepo()
-        {
-            _storage = new ProductsStorage();
-        }
+        public ProductsStorage GetById(int id) =>
+            StarterStorage.Products.FirstOrDefault(p => p.Id == id);
 
-        public IEnumerable<Product> GetAll()
-        {
-            return _storage.GetAllProducts();
-        }
-
-        public Product GetById(int id)
-        {
-            return _storage.GetProductById(id);
-        }
-
-        public IEnumerable<Product> GetByDepositoryId(int depositoryId)
-        {
-            return _storage.GetProductsByDepositoryId(depositoryId);
-        }
+        public IEnumerable<ProductsStorage> GetByDepositoryId(int depositoryId) =>
+            StarterStorage.Products.Where(p => p.DepositaryId == depositoryId);
     }
 }

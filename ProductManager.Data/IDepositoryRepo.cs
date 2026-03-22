@@ -1,11 +1,12 @@
-﻿using ProductManager.Data;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using ProductManager.Data;
+using StorageClasses;
 
 namespace ProductManager.Data
 {
     public interface IDepositoryRepo
     {
-        IEnumerable<Depository> GetAll();
-        Depository GetById(int id);
+        IEnumerable<DepositaryStorage> GetAll();
+        DepositaryStorage GetById(int id);
     }
 }
