@@ -18,11 +18,12 @@ namespace StorageClasses
 
         [Column(TypeName ="decimal (18,2)")]
         public decimal PricePerItem { get; set; } 
-        public int Quantity { get; set; }     
-        
+        public int Quantity { get; set; }
 
+        [MaxLength(500)]
         public string Description { get; set; }
         public ProductsCategory Category { get; set; }
+        public virtual DepositaryStorage Depositary { get; set; }
 
         public ProductsStorage() { }
         public ProductsStorage(int id, string name) { Id = id; Name = name; }

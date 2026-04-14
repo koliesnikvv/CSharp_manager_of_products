@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using StorageClasses;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace ProductManager.Data
 {
