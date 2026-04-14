@@ -1,13 +1,26 @@
-﻿namespace StorageClasses
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace StorageClasses
 {
    
     public class ProductsStorage
     {
+        [Key]
         public int Id { get; set; }
+
+        [Required]
+        [MaxLength(200)]
         public string Name { get; set; }
+
+        [ForeignKey("DepositaryStorage")]
         public int DepositaryId { get; set; }
+
+        [Column(TypeName ="decimal (18,2)")]
         public decimal PricePerItem { get; set; } 
-        public int Quantity { get; set; }       
+        public int Quantity { get; set; }     
+        
+
         public string Description { get; set; }
         public ProductsCategory Category { get; set; }
 
