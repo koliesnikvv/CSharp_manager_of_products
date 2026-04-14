@@ -1,5 +1,7 @@
 ﻿using ProductManager.Data;
 using ProductManager.Services;
+using System.Threading.Tasks;
+
 
 namespace ProductManager.Services
 {
@@ -12,7 +14,7 @@ namespace ProductManager.Services
         }
         public ProductDetailsDto GetProductDetails(int id)
         {
-            var product = _productRepo.GetById(id);
+            var product = await _productRepo.GetByIdAsync(id);
             if (product == null)
                 return null;
 
