@@ -16,8 +16,9 @@ namespace ProductManager.Services
         public List<ProductListDto> Products {
             get; set; 
         } = new();
-        public decimal TotalValue { 
-            get; set; 
+        public decimal TotalValue
+        {
+            get; set;
         }
     }
 }
