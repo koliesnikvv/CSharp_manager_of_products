@@ -6,17 +6,25 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <StartupObject>ProductManagerUI.App</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="warehouse.db" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.10" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CalculationClasses\CalculationClasses.csproj" />
+    <ProjectReference Include="..\ProductManager.Data\ProductManager.Data.csproj" />
     <ProjectReference Include="..\ProductManager.Services\ProductManager.Services.csproj" />
-    <ProjectReference Include="..\Services\ServicesClasses.csproj" />
-    <ProjectReference Include="..\StorageClasses\StorageClasses.csproj" />
   </ItemGroup>
 
 </Project>
