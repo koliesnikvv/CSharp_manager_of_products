@@ -1,11 +1,15 @@
-﻿using ProductManager.Data;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using ProductManager.Data; // Це обов'язково
 
 namespace ProductManager.Data
 {
     public interface IDepositoryRepo
     {
-        IEnumerable<Depository> GetAll();
-        Depository GetById(int id);
+       // Замість IEnumerable<Depository> пиши DepositaryStorage
+
+       IEnumerable<DepositaryStorage> GetAll();
+        DepositaryStorage GetById(int id);
+        void Add(DepositaryStorage depositary);
+        void Delete(int id);
     }
 }

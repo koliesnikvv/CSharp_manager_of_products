@@ -1,25 +1,42 @@
-﻿using ProductManager.Data;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
+using ProductManager.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace ProductManager.Data
 {
-    public class DepositoryRepo : IDepositoryRepo
+    public class DepositaryRepo : IDepositoryRepo
     {
-        private readonly DepositoryStorage _storage;
+        private readonly AppDbContext _context;
 
-        public DepositoryRepo()
+        public DepositaryRepo(AppDbContext context)
         {
-            _storage = new DepositoryStorage();
+            _context = context;
         }
 
-        public IEnumerable<Depository> GetAll()
+        public IEnumerable<DepositaryStorage> GetAll()
         {
-            return _storage.GetAllDepositories();
+            // Отримуємо всі склади з бази даних
+            return _context.Depositaries.ToList();
         }
 
-        public Depository GetById(int id)
+        public DepositaryStorage GetById(int id)
         {
-            return _storage.GetDepositoryById(id);
+            return _context.Depositaries.FirstOrDefault(d => d.Id == id);
+        }
+
+        public void Add(DepositaryStorage depositary)
+        {
+            _context.Depositaries.Add(depositary);
+        }
+
+        public void Delete(int id)
+        {
+            var depositary = GetById(id);
+            if (depositary != null)
+            {
+                _context.Depositaries.Remove(depositary);
+            }
         }
     }
 }

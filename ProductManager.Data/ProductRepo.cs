@@ -1,30 +1,55 @@
-﻿using ProductManager.Data;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
+using ProductManager.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace ProductManager.Data
 {
     public class ProductRepo : IProductRepo
     {
-        private readonly ProductsStorage _storage;
+        private readonly AppDbContext _context;
 
-        public ProductRepo()
+        public ProductRepo(AppDbContext context)
         {
-            _storage = new ProductsStorage();
+            _context = context;
         }
 
-        public IEnumerable<Product> GetAll()
+        public IEnumerable<ProductsStorage> GetAll()
         {
-            return _storage.GetAllProducts();
+            // Отримуємо всі товари
+            return _context.Products.ToList();
         }
 
-        public Product GetById(int id)
+        public IEnumerable<ProductsStorage> GetByDepositoryId(int depositoryId)
         {
-            return _storage.GetProductById(id);
+            // Фільтруємо товари за ID складу
+            return _context.Products
+                           .Where(p => p.DepositoryId == depositoryId)
+                           .ToList();
         }
 
-        public IEnumerable<Product> GetByDepositoryId(int depositoryId)
+        public ProductsStorage GetById(int id)
         {
-            return _storage.GetProductsByDepositoryId(depositoryId);
+            return _context.Products.FirstOrDefault(p => p.Id == id);
+        }
+
+        public void Add(ProductsStorage product)
+        {
+            _context.Products.Add(product);
+        }
+
+        public void Update(ProductsStorage product)
+        {
+            _context.Products.Update(product);
+        }
+
+        public void Delete(int id)
+        {
+            var product = GetById(id);
+            if (product != null)
+            {
+                _context.Products.Remove(product);
+            }
         }
     }
 }

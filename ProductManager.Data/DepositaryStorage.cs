@@ -1,50 +1,14 @@
-﻿using ProductManager.Data;
-using ProductManager.Data;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProductManager.Data
 {
-    public class DepositoryStorage
+    public class DepositaryStorage
     {
-        private List<Depository> _depositories;
-
-        public DepositoryStorage()
-        {
-            InitializeData();
-        }
-
-        private void InitializeData()
-        {
-            _depositories = new List<Depository>
-            {
-                new Depository
-                {
-                    Id = 1,
-                    Name = "Kyiv Central Hub",
-                    Location = DepositaryLocation.Kyiv,
-                    Products = new List<Product>()
-                },
-                new Depository
-                {
-                    Id = 2,
-                    Name = "Lviv Tech Warehouse",
-                    Location = DepositaryLocation.Lviv,
-                    Products = new List<Product>()
-                },
-                new Depository
-                {
-                    Id = 3,
-                    Name = "Odesa Port Terminal",
-                    Location = DepositaryLocation.Odesa,
-                    Products = new List<Product>()
-                }
-            };
-        }
-
-        public List<Depository> GetAllDepositories() => _depositories;
-        public Depository GetDepositoryById(int id) =>
-            _depositories.FirstOrDefault(d => d.Id == id);
+        [Key]
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Location { get; set; } = string.Empty;
+        public virtual ICollection<ProductsStorage> Products { get; set; } = new List<ProductsStorage>();
     }
 }
-   
-//i didn't know another word to call склад sorry
