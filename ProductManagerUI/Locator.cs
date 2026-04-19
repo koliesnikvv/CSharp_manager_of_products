@@ -1,25 +1,45 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using ServicesClasses;
+using ProductManager.Data;
+using ProductManager.Services;
+using ProductManagerUI.ViewModels;
 using System;
 
 namespace ProductManagerUI
 {
-    public static class Locator
+    public class Locator
     {
-        private static IServiceProvider _serviceProvider;
+        private readonly IServiceProvider _serviceProvider;
 
-        public static void Init()
+        public Locator()
         {
             var services = new ServiceCollection();
 
-            // Register services according to DI principles
-            services.AddSingleton<IStorageInit, StarterStorage>();
-            services.AddSingleton<IDataService, ProcessingStorage>();
+            // 1. Реєструємо контекст бази даних
+            services.AddDbContext<AppDbContext>();
 
+            // 2. Реєструємо сервіс (Interface + Implementation)
+            services.AddSingleton<IDepositoryService, ProductManager.Services.DepositoryService>();
+
+            // 3. Реєструємо ViewModel для сторінок
+            services.AddSingleton<MainViewModel>();
+
+            // StorageDetailsViewModel створюємо як Transient, 
+            // щоб він оновлювався при кожному відкритті сторінки складу
+            services.AddTransient<StorageDetailsViewModel>();
+
+            // ВАЖЛИВО: Будуємо провайдер, щоб він не був null
             _serviceProvider = services.BuildServiceProvider();
         }
 
-        // Service access point for the UI
-        public static IDataService DataService => _serviceProvider.GetRequiredService<IDataService>();
+        // Властивості для доступу з XAML або Code-behind
+        public MainViewModel MainViewModel => _serviceProvider.GetRequiredService<MainViewModel>();
+
+        public IDepositoryService DepositoryService => _serviceProvider.GetRequiredService<IDepositoryService>();
+
+        // Метод для створення детальної в'юмоделі з параметром (Id складу)
+        public StorageDetailsViewModel GetStorageDetailsViewModel(int id)
+        {
+            return new StorageDetailsViewModel(DepositoryService, id);
+        }
     }
 }
