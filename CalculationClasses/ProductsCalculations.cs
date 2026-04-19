@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using StorageClasses;
+using ProductManager.Data;
 //calc class for editing, creating and viewing products
 
 namespace CalculationClasses
@@ -29,14 +29,14 @@ namespace CalculationClasses
                 return _data.Name;
             }
         }
-        public int Amount
+        public int Quantity
         {
             get
             {
                 return _data.Quantity;
             }
         }
-        public decimal Price
+        public decimal PricePerItem
         {
             get
             {
@@ -62,7 +62,7 @@ namespace CalculationClasses
         {
             get
             {
-                return Amount * Price;
+                return Quantity * PricePerItem;
             }
         }
         public int DepositaryId
@@ -79,9 +79,9 @@ namespace CalculationClasses
             information += $"Name of product: {Name}\n";
             information += $"Description: {Description}\n";
             information += $"Category: {Category}\n";
-            information += $"Left in storage -  {Amount}\n";
-            information += $"Price for one is  {Price}\n";
-            information += $"Total price is  {TotalPrice}\n";
+            information += $"Left in storage -  {Quantity}\n";
+            information += $"PricePerItem for one is  {PricePerItem}\n";
+            information += $"Total PricePerItem is  {TotalPrice}\n";
             information += $"You can find this product on depositary  {DepositaryId}";
             return information;
         }

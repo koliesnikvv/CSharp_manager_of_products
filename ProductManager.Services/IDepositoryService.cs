@@ -1,10 +1,14 @@
-﻿using ProductManager.Services;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using ProductManager.Data;
 
-namespace ProductManager.Services{
-    public interface IDepositoryServices
+namespace ProductManager.Services
+{
+    public interface IDepositoryService
     {
-            IEnumerable<DepositoryListDto> GetAllDepositories();
-            DepositoryDetailsDto GetDepositoryDetails(int id);
-        }
+        // Метод для отримання списку всіх складів (для головної сторінки)
+        IEnumerable<DepositoryListDto> GetAllDepositories();
+
+        // Метод для отримання детальної інформації про склад (для сторінки деталей)
+        DepositoryDetailsDto GetDepositoryById(int id);
     }
+}

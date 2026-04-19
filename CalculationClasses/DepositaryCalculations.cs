@@ -1,5 +1,6 @@
 ﻿using System.Linq;
-using StorageClasses;
+using ProductManager.Data;
+using CalculationClasses;
 
 namespace CalculationClasses
 {
@@ -14,7 +15,7 @@ namespace CalculationClasses
 
         public decimal CalculateTotalStockValue()
         {
-            // Calculate the sum (price * quantity) for all products in the list of this warehouse
+            // Calculate the sum (PricePerItem * quantity) for all products in the list of this warehouse
             return _storage.Products.Sum(p => p.PricePerItem * p.Quantity);
         }
 
