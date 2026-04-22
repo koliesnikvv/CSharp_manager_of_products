@@ -1,59 +1,55 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using ProductManager.Data;
 using Microsoft.EntityFrameworkCore;
-using ProductManager.Data.Data;
-using StorageClasses;
-
 
 namespace ProductManager.Data
-{ 
-        public class ProductRepo : IProductRepo
+{
+    public class ProductRepo : IProductRepo
+    {
+        private readonly AppDbContext _context;
+
+        public ProductRepo(AppDbContext context)
         {
-            private readonly AppDbContext _context;
+            _context = context;
+        }
 
-            public ProductRepo(AppDbContext context)
-            {
-                _context = context;
-            }
+        public IEnumerable<ProductsStorage> GetAll()
+        {
+            // Отримуємо всі товари
+            return _context.Products.ToList();
+        }
 
-            public async Task<IEnumerable<ProductsStorage>> GetAllAsync()
-            {
-                return await _context.Products.ToListAsync();
-            }
+        public IEnumerable<ProductsStorage> GetByDepositoryId(int depositoryId)
+        {
+            // Фільтруємо товари за ID складу
+            return _context.Products
+                           .Where(p => p.DepositoryId == depositoryId)
+                           .ToList();
+        }
 
-            public async Task<ProductsStorage> GetByIdAsync(int id)
-            {
-                return await _context.Products.FindAsync(id);
-            }
+        public ProductsStorage GetById(int id)
+        {
+            return _context.Products.FirstOrDefault(p => p.Id == id);
+        }
 
-            public async Task<IEnumerable<ProductsStorage>> GetByDepositoryIdAsync(int depositoryId)
-            {
-                return await _context.Products
-                    .Where(p => p.DepositaryId == depositoryId)
-                    .ToListAsync();
-            }
+        public void Add(ProductsStorage product)
+        {
+            _context.Products.Add(product);
+        }
 
-            public async Task AddAsync(ProductsStorage product)
-            {
-                await _context.Products.AddAsync(product);
-                await _context.SaveChangesAsync();
-            }
+        public void Update(ProductsStorage product)
+        {
+            _context.Products.Update(product);
+        }
 
-            public async Task UpdateAsync(ProductsStorage product)
+        public void Delete(int id)
+        {
+            var product = GetById(id);
+            if (product != null)
             {
-                _context.Products.Update(product);
-                await _context.SaveChangesAsync();
-            }
-
-            public async Task DeleteAsync(int id)
-            {
-                var product = await GetByIdAsync(id);
-                if (product != null)
-                {
-                    _context.Products.Remove(product);
-                    await _context.SaveChangesAsync();
-                }
+                _context.Products.Remove(product);
             }
         }
     }
+}

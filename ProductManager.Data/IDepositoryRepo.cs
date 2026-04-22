@@ -1,19 +1,15 @@
-﻿using ProductManager.Data;
-using StorageClasses;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
+﻿using System.Collections.Generic;
+using ProductManager.Data; // Це обов'язково
 
 namespace ProductManager.Data
 {
     public interface IDepositoryRepo
-
     {
-        Task<IEnumerable<DepositaryStorage>> GetAllAsync();
-        Task<DepositaryStorage> GetByIdAsync(int id);
-        Task<DepositaryStorage> GetByIdWithProductsAsync(int id);
-        Task AddAsync(DepositaryStorage depository);
-        Task UpdateAsync(DepositaryStorage depository);
-        Task DeleteAsync(int id);
+       // Замість IEnumerable<Depository> пиши DepositaryStorage
+
+       IEnumerable<DepositaryStorage> GetAll();
+        DepositaryStorage GetById(int id);
+        void Add(DepositaryStorage depositary);
+        void Delete(int id);
     }
 }

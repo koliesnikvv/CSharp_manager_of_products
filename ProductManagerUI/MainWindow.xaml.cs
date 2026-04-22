@@ -1,22 +1,24 @@
-﻿using System.Windows;
-using ProductManagerUI.Pages; 
+﻿using System;
+using System.Windows;
+using ProductManagerUI.Pages;
 
 namespace ProductManagerUI
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
 
-            // Initialize the IoC container (data service)
-            Locator.Init();
-
-            //Open the first page (list of depositaries)
-            MainFrame.Navigate(new MainPage());
+            try
+            {
+                // Пробуємо завантажити головну сторінку у Frame
+                MainFrame.Navigate(new MainPage());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Помилка при переході на MainPage: {ex.Message}");
+            }
         }
     }
 }

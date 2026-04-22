@@ -1,23 +1,81 @@
-﻿using System.Collections.ObjectModel;
-using ProductManager.Services; 
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows;
+using ProductManager.Data;
+using ProductManager.Services;
+using ProductManagerUI.ViewModels;
+using ProductManagerUI.ViewModels.ProductManagerUI.ViewModels;
 
 namespace ProductManagerUI.ViewModels
 {
-    // Inheriting from BaseViewModel to enable PropertyChanged
-    public class MainViewModel : BaseViewModel
+    /// <summary>
+    /// ViewModel для головної сторінки, що відображає список складів.
+    /// Наслідується від ViewModelBase для підтримки оновлення інтерфейсу.
+    /// </summary>
+    public class MainViewModel : ViewModelBase
     {
-        private readonly IDepositoryServices _depositoryService;
+        private readonly IDepositoryService _service;
+        private DepositoryListDto _selectedDepository;
 
-        // A specialized UI collection. The UI updates automatically when it changes.
-        public ObservableCollection<DepositoryListDto> Depositories { get; set; }
+        // Колекція складів, до якої прив'язаний ListBox у XAML
+        public ObservableCollection<DepositoryListDto> Depositories { get; set; } = new();
 
-        public MainViewModel(IDepositoryServices depositoryService)
+        /// <summary>
+        /// Вибраний склад у списку. 
+        /// (Корисно, якщо ти захочеш обробляти вибір через Binding, а не SelectionChanged)
+        /// </summary>
+        public DepositoryListDto SelectedDepository
         {
-            _depositoryService = depositoryService;
+            get => _selectedDepository;
+            set
+            {
+                _selectedDepository = value;
+                OnPropertyChanged(); // Сповіщаємо інтерфейс про зміну
+            }
+        }
 
-            var data = _depositoryService.GetAllDepositories();
+        public MainViewModel(IDepositoryService service)
+        {
+            _service = service;
 
-            Depositories = new ObservableCollection<DepositoryListDto>(data);
+            // Завантажуємо дані при створенні ViewModel
+            LoadData();
+        }
+
+        /// <summary>
+        /// Метод для завантаження даних із бази SQLite через сервіс.
+        /// </summary>
+        public void LoadData()
+        {
+            try
+            {
+                // Отримуємо актуальний список DTO із сервісу
+                var data = _service.GetAllDepositories();
+
+                // Обов'язково очищуємо колекцію перед додаванням нових даних
+                Depositories.Clear();
+
+                if (data != null)
+                {
+                    foreach (var item in data)
+                    {
+                        Depositories.Add(item);
+                    }
+                }
+
+                // Логування для перевірки в Output, якщо список порожній
+                if (Depositories.Count == 0)
+                {
+                    System.Diagnostics.Debug.WriteLine("MainViewModel: База даних повернула порожній список.");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Виводимо помилку в консоль відладки, якщо щось пішло не так з SQLite
+                System.Diagnostics.Debug.WriteLine($"MainViewModel Error: {ex.Message}");
+                MessageBox.Show("Помилка при завантаженні даних із бази SQLite.");
+            }
         }
     }
 }

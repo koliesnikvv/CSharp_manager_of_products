@@ -1,57 +1,42 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using ProductManager.Data;
 using Microsoft.EntityFrameworkCore;
-using ProductManager.Data.Data;
-using StorageClasses;
 
+namespace ProductManager.Data
+{
+    public class DepositaryRepo : IDepositoryRepo
+    {
+        private readonly AppDbContext _context;
 
-namespace ProductManager.Data;
-        public class DepositoryRepo : IDepositoryRepo
+        public DepositaryRepo(AppDbContext context)
         {
-            private readonly AppDbContext _context;
+            _context = context;
+        }
 
-            public DepositoryRepo(AppDbContext context)
-            {
-                _context = context;
-            }
+        public IEnumerable<DepositaryStorage> GetAll()
+        {
+            // Отримуємо всі склади з бази даних
+            return _context.Depositaries.ToList();
+        }
 
-            public async Task<IEnumerable<DepositaryStorage>> GetAllAsync()
-            {
-                return await _context.Depositories.ToListAsync();
-            }
+        public DepositaryStorage GetById(int id)
+        {
+            return _context.Depositaries.FirstOrDefault(d => d.Id == id);
+        }
 
-            public async Task<DepositaryStorage> GetByIdAsync(int id)
-            {
-                return await _context.Depositories.FindAsync(id);
-            }
+        public void Add(DepositaryStorage depositary)
+        {
+            _context.Depositaries.Add(depositary);
+        }
 
-            public async Task<DepositaryStorage> GetByIdWithProductsAsync(int id)
+        public void Delete(int id)
+        {
+            var depositary = GetById(id);
+            if (depositary != null)
             {
-                return await _context.Depositories
-                    .Include(d => d.Products)
-                    .FirstOrDefaultAsync(d => d.Id == id);
-            }
-
-            public async Task AddAsync(DepositaryStorage depository)
-            {
-                await _context.Depositories.AddAsync(depository);
-                await _context.SaveChangesAsync();
-            }
-
-            public async Task UpdateAsync(DepositaryStorage depository)
-            {
-                _context.Depositories.Update(depository);
-                await _context.SaveChangesAsync();
-            }
-
-            public async Task DeleteAsync(int id)
-            {
-                var depository = await GetByIdAsync(id);
-                if (depository != null)
-                {
-                    _context.Depositories.Remove(depository);
-                    await _context.SaveChangesAsync();}
+                _context.Depositaries.Remove(depositary);
             }
         }
- 
+    }
+}

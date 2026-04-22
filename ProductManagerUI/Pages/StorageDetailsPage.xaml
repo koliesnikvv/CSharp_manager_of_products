@@ -1,25 +1,74 @@
 ﻿<Page x:Class="ProductManagerUI.Pages.StorageDetailsPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      Title="StorageDetails">
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="StorageDetailsPage">
 
-    <Grid>
-        <StackPanel Margin="10">
-            <TextBlock Text="{Binding Storage.Name}" FontSize="24" Margin="10"/>
-            <TextBlock Text="{Binding Storage.Location}" Margin="10,0,10,10"/>
+    <Grid Background="#F5F5F5">
+        <StackPanel Margin="20">
+            <TextBlock Text="{Binding Storage.Name}" 
+                       FontSize="28" 
+                       FontWeight="Bold" 
+                       Foreground="#2C3E50" 
+                       Margin="0,0,0,5"/>
 
-            <ListBox ItemsSource="{Binding Storage.Products}" 
-                     x:Name="ProductsListBox" 
-                     Height="300"
+            <TextBlock Text="{Binding Storage.Location}" 
+                       FontSize="16" 
+                       Foreground="#7F8C8D" 
+                       Margin="0,0,0,25"/>
+
+            <TextBlock Text="Select a product to view details:" 
+                       FontSize="14" 
+                       Foreground="#34495E" 
+                       Margin="0,0,0,10" 
+                       FontStyle="Italic"/>
+
+            <ListBox x:Name="ProductsListBox" 
+                     ItemsSource="{Binding Storage.Products}" 
+                     Height="280" 
+                     Background="White" 
+                     BorderBrush="#BDC3C7" 
+                     BorderThickness="1"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto"
                      SelectionChanged="ProductsListBox_SelectionChanged">
+
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Name}" Padding="5"/>
+                        <Border Padding="10" BorderBrush="#ECF0F1" BorderThickness="0,0,0,1">
+                            <StackPanel Orientation="Horizontal">
+                                <Ellipse Width="8" Height="8" Fill="#3498DB" Margin="0,0,10,0"/>
+
+                                <TextBlock FontSize="15" VerticalAlignment="Center">
+                                    <Run Text="{Binding Name}" FontWeight="SemiBold" Foreground="#2C3E50"/>
+                                    <Run Text="  |  " Foreground="#BDC3C7"/>
+                                    <Run Text="Category: " Foreground="#7F8C8D" FontSize="13"/>
+                                    <Run Text="{Binding Category}" Foreground="#34495E" FontSize="13"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <Button Content="Back" Click="Back_Click" Width="100" Margin="10" HorizontalAlignment="Left"/>
+            <Button Content="← Back to Warehouses" 
+                    Click="Back_Click" 
+                    Width="180" 
+                    Height="38" 
+                    Margin="0,25,0,0" 
+                    HorizontalAlignment="Left"
+                    Background="#34495E" 
+                    Foreground="White" 
+                    FontWeight="SemiBold"
+                    Cursor="Hand">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
         </StackPanel>
     </Grid>
 </Page>

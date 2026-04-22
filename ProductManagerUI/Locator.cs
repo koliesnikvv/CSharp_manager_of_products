@@ -1,30 +1,45 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using ProductManager.Data; 
-using ProductManager.Services; 
+using ProductManager.Data;
+using ProductManager.Services;
+using ProductManagerUI.ViewModels;
 using System;
 
 namespace ProductManagerUI
 {
-    public static class Locator
+    public class Locator
     {
-        private static IServiceProvider _serviceProvider;
+        private readonly IServiceProvider _serviceProvider;
 
-        public static void Init()
+        public Locator()
         {
             var services = new ServiceCollection();
 
-            //(Level 1: Repositories)
-            services.AddSingleton<IDepositoryRepo, DepositoryRepo>();
-            services.AddSingleton<IProductRepo, ProductRepo>();
+            // 1. Реєструємо контекст бази даних
+            services.AddDbContext<AppDbContext>();
 
-            //(Level 2: Services) 
-            services.AddSingleton<IDepositoryServices, DepositoryService>();
+            // 2. Реєструємо сервіс (Interface + Implementation)
+            services.AddSingleton<IDepositoryService, ProductManager.Services.DepositoryService>();
 
+            // 3. Реєструємо ViewModel для сторінок
+            services.AddSingleton<MainViewModel>();
+
+            // StorageDetailsViewModel створюємо як Transient, 
+            // щоб він оновлювався при кожному відкритті сторінки складу
+            services.AddTransient<StorageDetailsViewModel>();
+
+            // ВАЖЛИВО: Будуємо провайдер, щоб він не був null
             _serviceProvider = services.BuildServiceProvider();
         }
 
-        // Access point for ViewModels and pages 
-        public static IDepositoryServices DepositoryService =>
-            _serviceProvider.GetRequiredService<IDepositoryServices>();
+        // Властивості для доступу з XAML або Code-behind
+        public MainViewModel MainViewModel => _serviceProvider.GetRequiredService<MainViewModel>();
+
+        public IDepositoryService DepositoryService => _serviceProvider.GetRequiredService<IDepositoryService>();
+
+        // Метод для створення детальної в'юмоделі з параметром (Id складу)
+        public StorageDetailsViewModel GetStorageDetailsViewModel(int id)
+        {
+            return new StorageDetailsViewModel(DepositoryService, id);
+        }
     }
 }

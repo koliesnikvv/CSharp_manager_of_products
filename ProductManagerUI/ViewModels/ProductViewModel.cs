@@ -1,27 +1,24 @@
-﻿using ProductManager.Services;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ProductManagerUI.ViewModels
 {
-    public class ProductViewModel : BaseViewModel
+    using ProductManager.Services;
+
+    namespace ProductManagerUI.ViewModels
     {
-        private readonly IDepositoryServices _service;
-        private ProductListDto _product;
-
-        public ProductListDto Product
+        public class ProductViewModel : ViewModelBase
         {
-            get => _product;
-            set { _product = value; OnPropertyChanged(); }
-        }
+            private readonly IDepositoryService _service;
 
-        public ProductViewModel(IDepositoryServices service, int productId)
-        {
-            _service = service;
-            LoadProduct(productId);
-        }
-
-        private void LoadProduct(int id)
-        {
-            Product = _service.GetProductById(id);
+            // Конструктор, який приймає сервіс (тепер Locator буде задоволений)
+            public ProductViewModel(IDepositoryService service)
+            {
+                _service = service;
+            }
         }
     }
 }

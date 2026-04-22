@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ProductManager.Services\ProductManager.Services.csproj" />
     <ProjectReference Include="..\StorageClasses\StorageClasses.csproj" />
   </ItemGroup>
 

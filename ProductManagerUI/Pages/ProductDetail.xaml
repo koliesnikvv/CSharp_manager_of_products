@@ -57,7 +57,7 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Column="0">
-                        <TextBlock Text="Price" FontSize="14" Foreground="#888"/>
+                        <TextBlock Text="PricePerItem" FontSize="14" Foreground="#888"/>
                         <TextBlock Text="{Binding Product.PricePerItem, StringFormat='{}{0:N2} UAH'}" 
                                    FontSize="20" 
                                    FontWeight="Bold" 

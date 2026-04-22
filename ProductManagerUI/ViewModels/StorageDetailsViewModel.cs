@@ -1,23 +1,32 @@
 ﻿using System.Collections.ObjectModel;
-using ProductManager.Services; 
+using ProductManager.Data;
+using ProductManager.Services;
+using ProductManagerUI.ViewModels.ProductManagerUI.ViewModels;
 
 namespace ProductManagerUI.ViewModels
 {
-    public class StorageDetailsViewModel : BaseViewModel
+    public class StorageDetailsViewModel : ViewModelBase
     {
-        private readonly IDepositoryServices _service;
-
+        private readonly IDepositoryService _service;
         private DepositoryDetailsDto _storage;
+
+        // Саме до цієї властивості прив'язаний твій XAML через {Binding Storage...}
         public DepositoryDetailsDto Storage
         {
             get => _storage;
             set { _storage = value; OnPropertyChanged(); }
         }
 
-        public StorageDetailsViewModel(IDepositoryServices service, int id)
+        public StorageDetailsViewModel(IDepositoryService service, int depositoryId)
         {
             _service = service;
-            Storage = _service.GetDepositoryDetails(id);
+            LoadData(depositoryId);
+        }
+
+        public void LoadData(int id)
+        {
+            // Отримуємо повні дані про склад разом із товарами
+            Storage = _service.GetDepositoryById(id);
         }
     }
 }

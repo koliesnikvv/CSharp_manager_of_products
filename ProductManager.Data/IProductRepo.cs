@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
-using StorageClasses;
-using System.Threading.Tasks;
+using ProductManager.Data;
+using ProductManager.Data;
 
 namespace ProductManager.Data
 {
     public interface IProductRepo
     {
-        Task<IEnumerable<ProductsStorage>> GetAllAsync();
-        Task<ProductsStorage> GetByIdAsync(int id);
-        Task<IEnumerable<ProductsStorage>> GetByDepositoryIdAsync(int depositoryId);
-        Task AddAsync(ProductsStorage product);
-        Task UpdateAsync(ProductsStorage product);
-        Task DeleteAsync(int id);
+        // Замість Product пиши ProductsStorage
+        IEnumerable<ProductsStorage> GetAll();
+        IEnumerable<ProductsStorage> GetByDepositoryId(int depositoryId);
+        ProductsStorage GetById(int id);
+        void Add(ProductsStorage product);
+        void Update(ProductsStorage product);
+        void Delete(int id);
     }
 }
