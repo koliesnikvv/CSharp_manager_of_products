@@ -1,9 +1,9 @@
-﻿using ProductManager.Services;
+﻿using System.Threading.Tasks;
 
-namespace ProductManager
+namespace ProductManager.Services
 {
     public interface IProductService
     {
-        ProductDetailsDto GetProductDetails(int id);
+        Task<ProductDetailsDto> GetProductDetailsAsync(int id);
     }
 }
